@@ -4,7 +4,7 @@ export default class ProductItem extends HTMLElement {
   }
 
   connectedCallback() {
-    document.getElementById("product-item-template");
+    const template = document.getElementById("product-item-template");
     const content = template.content.cloneNode(true);
 
     this.appendChild(content);
@@ -18,7 +18,7 @@ export default class ProductItem extends HTMLElement {
       if (event.target.tagName.toLowerCase() == "button") {
         //TODO
       } else {
-        app.router.go(`/product-${product.id}`);
+        app.router.go(`/product/${product.id}`);
       }
       event.preventDefault();
     });

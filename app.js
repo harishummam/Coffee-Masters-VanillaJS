@@ -7,6 +7,7 @@ import Router from "./services/Router.js";
 import { MenuPage } from "./components/MenuPage.js";
 import { DetailsPage } from "./components/DetailsPage.js";
 import { OrderPage } from "./components/OrderPage.js";
+import ProductItem from "./components/ProductItem.js";
 
 // This creates a global object on the window; kind of a singleton that we can use in every file thats imported in app.js
 // Since we converted app.js into a module, we needed a way to make the Store global else it would have been modular as well
