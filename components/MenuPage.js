@@ -2,7 +2,7 @@ export class MenuPage extends HTMLElement {
   constructor() {
     super();
 
-    this.root = this.attachShadow({ mode: open });
+    this.root = this.attachShadow({ mode: "open" });
   }
 
   // When the component gets attached to the DOM
