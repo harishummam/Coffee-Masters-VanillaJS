@@ -1,5 +1,11 @@
 export class OrderPage extends HTMLElement {
-  
+  // The # means it will be a private object
+  #user = {
+    name: "",
+    phone: "",
+    email: "",
+  };
+
   constructor() {
     super();
 
@@ -56,6 +62,45 @@ export class OrderPage extends HTMLElement {
             </li>                
         `;
     }
+
+    /*
+      We won't select the form using document.querySelector because the form is in the ShadowDOM.
+      So we use this.root.querySelector to select the form
+    */
+    this.setFormBindings(this.root.querySelector("form"));
+  }
+
+  setFormBindings(form) {
+    form.addEventListener("submit", (event) => {
+      // We dont want the browser to submit our form to the server, and change navigation (reload)
+      event.preventDefault();
+      alert(`Thanks For Your Order ${this.#user.name}`);
+
+      // If the double binding is working, changing the user should change the form.
+      this.#user.name = "";
+      this.#user.email = "";
+      this.#user.phone = "";
+
+      // TODO send the data to the server
+    });
+
+    // Set Double Data Binding
+    /*
+      If you are changing the form, you are changing the user,
+      If you are changing the user, you are changing the form
+    */
+    this.#user = new Proxy(this.#user, {
+      set(target, property, value) {
+        target[property] = value;
+        form.elements[property].value = value;
+        return true;
+      },
+    });
+    Array.from(form.elements).forEach((element) => {
+      element.addEventListener("change", (event) => {
+        this.#user[element.name] = element.value;
+      });
+    });
   }
 }
 customElements.define("order-page", OrderPage);
